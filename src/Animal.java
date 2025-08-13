@@ -15,16 +15,14 @@ public abstract class Animal {
     public String getNome() {
         return nome;
     }
-
     public int getIdade() {
         return idade;
     }
-
-    public String getRace() {
-        return race;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
+    public String getRace() {return race;}
+    public double getPeso() {return peso;}
+    public String setNome(String nome){return this.nome;}
+    public int setIdade(int idade){return this.idade;}
+    public String setRace(String race){return this.race;}
+    public double setPeso(double peso){return this.peso;}
+    public abstract String toString();
 }
