@@ -1,7 +1,7 @@
 package InputExceptions;
 
-public class NotAIntException extends RuntimeException {
-    public NotAIntException(String message) {
+public class NotANumberException extends RuntimeException {
+    public NotANumberException(String message) {
         super(message);
     }
 }
