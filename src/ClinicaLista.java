@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClinicaLista {
-    private List<Animal> lista;
-    private Scanner sc;
+    private final List<Animal> lista;
+    private final Scanner sc;
     public ClinicaLista(){
         this.lista = new ArrayList<>(); this.sc = new Scanner(System.in);
     }
@@ -22,6 +22,7 @@ public class ClinicaLista {
             System.out.println("3: Excluir Animal");
             System.out.println("4: Mostrar Lista");
             System.out.println("0: Encerrar.");
+            opt = sc.nextInt();
             switch (opt){
                 case 1:
                     addAnimal();
@@ -30,7 +31,7 @@ public class ClinicaLista {
                     attCadastro();
                     break;
                 case 3:
-                    delAnimal();
+                    //delAnimal();
                     break;
                 case 4:
                     showList();
@@ -42,7 +43,7 @@ public class ClinicaLista {
             sc.close();
         }
     }
-    public void addAnimal(){
+    private void addAnimal(){
         while (true){
             try {
                 System.out.println("Digite o nome do Animal");
@@ -83,7 +84,114 @@ public class ClinicaLista {
 
             }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
                 System.out.println(e.getMessage());
-            };
+            }
         }
+    }
+    private void attCadastro(){
+        System.out.println("Digite o nome do animal que quer atualizar o cadastro");
+        String animalOpt = sc.next();
+        Animal animal = animalFinder(animalOpt);
+        if(animal == null){
+            System.out.println("Animal não encontrado. Voltando para o menu principal....\n");
+            return;
+        }
+        int opt;
+        do {
+            System.out.println("\nAnimal encontrado! O que você gostaria de atualizar? \n");
+            System.out.println("1: Nome");
+            System.out.println("2: Idade");
+            System.out.println("3: Raça");
+            System.out.println("4: Peso");
+            System.out.println("0: Encerrar");
+            opt = sc.nextInt();
+            switch (opt){
+                case 1:
+                    while (true){
+                        try{
+                            System.out.println("Digite o novo nome do animal: ");
+                            String novoNome = sc.next();
+                            InputValidators.notString(novoNome);
+                            animal.setNome(novoNome);
+                            break;
+                        }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    break;
+                case 2:
+                    while (true){
+                        try {
+                            System.out.println("Digite a idade do animal: ");
+                            String novaIdadeParcial = sc.next();
+                            InputValidators.notANumber(novaIdadeParcial);
+                            int novaIdade = Integer.parseInt(novaIdadeParcial);
+                            InputValidators.notAZeroOrMinor(novaIdade);
+                            animal.setIdade(novaIdade);
+                            break;
+                        }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                case 3:
+                    while (true){
+                        try{
+                            System.out.println("Digite a raça do animal: ");
+                            String newRace = sc.next();
+                            InputValidators.notString(newRace);
+                            animal.setRace(newRace);
+                            break;
+                        }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
+                            System.out.println(e.getMessage());}
+                    }
+                    break;
+                case 4:
+                    while (true){
+                        try {
+                            System.out.println("Digite o peso do animal: ");
+                            String novoPesoParcial = sc.next();
+                            InputValidators.notANumber(novoPesoParcial);
+                            double novoPeso = Double.parseDouble(novoPesoParcial);
+                            InputValidators.notAZeroOrMinor(novoPeso);
+                            animal.setPeso(novoPeso);
+                            break;
+                        }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
+                            System.out.println(e.getMessage());}
+                    }
+                    break;
+                case 0 :
+                    System.out.println("Voltando para o menu principal...\n");
+                    break;
+                default :
+                    System.out.println("Opção invalida.");
+            }
+        }while(opt != 0);
+
+    }
+    private void showList(){
+        while (true){
+            System.out.println("Quais animais você quer que seja listado?");
+            System.out.println("1: somente gatos.");
+            System.out.println("2: somente cachorros.");
+            System.out.println("3: todos os animais.");
+            int opt = sc.nextInt();
+            if(opt == 1){
+                lista.stream().filter(a -> a instanceof Gato).forEach(System.out::println);
+                break;
+            } else if (opt == 2) {
+                lista.stream()
+                        .filter(a -> a instanceof Cachorro)
+                        .forEach(System.out::println);
+                break;
+            } else if (opt == 3) {
+                lista.forEach(System.out::println);
+                break;
+            }
+            else {
+                System.out.println("Digito errado. Tente novamente");
+            }
+        }
+    }
+    private Animal animalFinder(String animalName){
+        return lista.stream().filter(a -> a.getNome().equalsIgnoreCase(animalName)).findFirst().orElse(null);
     }
 }
