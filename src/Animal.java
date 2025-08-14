@@ -20,9 +20,9 @@ public abstract class Animal {
     }
     public String getRace() {return race;}
     public double getPeso() {return peso;}
-    public String setNome(String nome){return this.nome;}
-    public int setIdade(int idade){return this.idade;}
-    public String setRace(String race){return this.race;}
-    public double setPeso(double peso){return this.peso;}
+    public void setNome(String nome){ this.nome = nome;}
+    public void setIdade(int idade){this.idade = idade;}
+    public void setRace(String race){this.race = race;}
+    public void setPeso(double peso){this.peso = peso;}
     public abstract String toString();
 }
