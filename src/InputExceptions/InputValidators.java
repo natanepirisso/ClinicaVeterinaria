@@ -5,7 +5,7 @@ public class InputValidators {
         if(!input.matches("[a-zA-Z]+")){throw new NotAStringException("Erro: digite apenas letras.");}
     }
     public static void notANumber(String input) throws NotANumberException{
-        if(!input.matches("^\\d+([,.]\\d+)?$")){throw new NotANumberException("Erro de digitação: Digite um número corretamente.");}
+        if(!input.matches("^\\d+([.]\\d+)?$")){throw new NotANumberException("Erro de digitação: Digite um número corretamente.");}
     }
     public static void notAZeroOrMinor(Number input) throws NotAZeroOrMinorException{
         if(input.doubleValue() <=0 ){throw new NotAZeroOrMinorException("Erro: O digito deve ser maior que 0");}
