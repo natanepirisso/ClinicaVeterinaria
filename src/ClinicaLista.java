@@ -87,6 +87,7 @@ public class ClinicaLista {
             }
         }
     }
+    // Mét0do para atualizar algum animal
     private void attCadastro(){
         System.out.println("Digite o nome do animal que quer atualizar o cadastro");
         String animalOpt = sc.next();
@@ -167,6 +168,7 @@ public class ClinicaLista {
         }while(opt != 0);
 
     }
+    // Printa a lista de animais
     private void showList(){
         while (true){
             System.out.println("Quais animais você quer que seja listado?");
@@ -191,6 +193,7 @@ public class ClinicaLista {
             }
         }
     }
+    //Função auxiliar. Serve para auxiliar o mét0do attCadastro
     private Animal animalFinder(String animalName){
         return lista.stream().filter(a -> a.getNome().equalsIgnoreCase(animalName)).findFirst().orElse(null);
     }
