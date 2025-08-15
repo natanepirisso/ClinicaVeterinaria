@@ -5,6 +5,6 @@ public class Gato extends Animal{
 
     @Override
     public String toString(){
-        return "Nome do Gato: "+ getNome() + " | Idade: "+ getIdade() + " | Peso do Gato: "+ getPeso()+"kg"+ " | Raça: "+ getRace();
+        return "Nome do Gato: "+ getNome() + " | Idade: "+ getIdade() + " | Peso do Gato: "+ getPeso()+"kg"+ " | Raça: "+ getRace() + " | ID: " + getId();
     }
 }
