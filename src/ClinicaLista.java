@@ -5,6 +5,7 @@ import InputExceptions.NotAZeroOrMinorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ClinicaLista {
@@ -31,7 +32,7 @@ public class ClinicaLista {
                     attCadastro();
                     break;
                 case 3:
-                    //delAnimal();
+                    delAnimal();
                     break;
                 case 4:
                     showList();
@@ -89,7 +90,7 @@ public class ClinicaLista {
     }
     // Mét0do para atualizar algum animal
     private void attCadastro(){
-        System.out.println("Digite o nome do animal que quer atualizar o cadastro");
+        System.out.println("Digite o ID do animal que quer atualizar o cadastro");
         String animalOpt = sc.next();
         Animal animal = animalFinder(animalOpt);
         if(animal == null){
@@ -168,6 +169,33 @@ public class ClinicaLista {
         }while(opt != 0);
 
     }
+    // Excluir Animal
+    private void delAnimal(){
+        System.out.println("\nDigite o ID do animal que deseja excluir: ");
+        String animalID = sc.next();
+        Animal animalEncontrado = animalFinder(animalID);
+        if(animalEncontrado == null){
+            System.out.println("Animal não encontrado. Voltando para o menu principal...");
+            return;
+        }
+        while(true){
+        System.out.println(animalEncontrado.getNome() + " foi encontrado. Deseja mesmo exclui-lo?\n");
+        System.out.println("Sim (Y)");
+        System.out.println("Não (N)");
+        String escolha = sc.next();
+            if (Objects.equals(escolha, "y")){
+                lista.remove(animalEncontrado);
+                System.out.println("Animal excluido da lista com sucesso.");
+                break;
+            } else if (Objects.equals(escolha, "n")) {
+                System.out.println("Exclusão cancelada...");
+                break;
+            }
+            else{
+                System.out.println("Algo deu errado. Tente novamente.");
+            }
+        }
+    }
     // Printa a lista de animais
     private void showList(){
         while (true){
@@ -194,7 +222,7 @@ public class ClinicaLista {
         }
     }
     //Função auxiliar. Serve para auxiliar o mét0do attCadastro
-    private Animal animalFinder(String animalName){
-        return lista.stream().filter(a -> a.getNome().equalsIgnoreCase(animalName)).findFirst().orElse(null);
+    private Animal animalFinder(String animalID){
+        return lista.stream().filter(a -> a.getId().equalsIgnoreCase(animalID)).findFirst().orElse(null);
     }
 }
