@@ -2,7 +2,7 @@ package InputExceptions;
 
 public class InputValidators {
     public static void notString(String input ) throws NotAStringException{
-        if(!input.matches("[a-zA-Z]+")){throw new NotAStringException("Erro: digite apenas letras.");}
+        if(!input.matches("[a-zA-ZÀ-ÿ\\s]+")){throw new NotAStringException("Erro: digite apenas letras.");}
     }
     public static void notANumber(String input) throws NotANumberException{
         if(!input.matches("^\\d+([.]\\d+)?$")){throw new NotANumberException("Erro de digitação: Digite um número corretamente.");}
