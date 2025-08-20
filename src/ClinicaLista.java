@@ -2,6 +2,7 @@ import InputExceptions.InputValidators;
 import InputExceptions.NotANumberException;
 import InputExceptions.NotAStringException;
 import InputExceptions.NotAZeroOrMinorException;
+import enums.Sexo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,32 +49,41 @@ public class ClinicaLista {
         while (true){
             try {
                 System.out.println("Digite o nome do Animal");
-                String nomeAnimal = sc.next();
+                sc.nextLine();
+                String nomeAnimal = sc.nextLine();
                 InputValidators.notString(nomeAnimal);
                 System.out.println("Digite a idade do Animal");
                 String idadeStr = sc.next();
+                sc.nextLine();
                 InputValidators.notANumber(idadeStr);
                 int idadeReal = Integer.parseInt(idadeStr);
                 InputValidators.notAZeroOrMinor(idadeReal);
                 System.out.println("Digite a raça do Animal");
-                String animalRace = sc.next();
+                String animalRace = sc.nextLine();
                 InputValidators.notString(animalRace);
                 System.out.println("Digite o peso do animal");
                 String pesoParcial = sc.next();
+                sc.nextLine();
                 InputValidators.notANumber(pesoParcial);
                 double pesoReal = Double.parseDouble(pesoParcial);
                 InputValidators.notAZeroOrMinor(pesoReal);
+                System.out.println("Qual o sexo do animal? (F) para Feminino e (M) para Masculino.");
+                String sexoEscolhido = sc.next();
+                sc.nextLine();
+                InputValidators.notString(sexoEscolhido);
+                Sexo getSexo = sexoDoAnimal(sexoEscolhido);
+
                 while(true){
                     System.out.println("Qual o tipo de animal?\n");
                     System.out.println("1: Gato");
                     System.out.println("2: Cachorro");
                     int escolha = sc.nextInt();
                     if (escolha == 1){
-                        Animal gato = new Gato(nomeAnimal,idadeReal,animalRace,pesoReal);
+                        Animal gato = new Gato(nomeAnimal,idadeReal,animalRace,pesoReal,getSexo);
                         lista.add(gato);
                         break;
                     } else if (escolha == 2) {
-                        Animal cachorro = new Cachorro(nomeAnimal,idadeReal,animalRace,pesoReal);
+                        Animal cachorro = new Cachorro(nomeAnimal,idadeReal,animalRace,pesoReal, getSexo);
                         lista.add(cachorro);
                         break;
                     }
@@ -99,11 +109,12 @@ public class ClinicaLista {
         }
         int opt;
         do {
-            System.out.println("\nAnimal encontrado! O que você gostaria de atualizar? \n");
+            System.out.println("\nO que você gostaria de atualizar? \n");
             System.out.println("1: Nome");
             System.out.println("2: Idade");
             System.out.println("3: Raça");
             System.out.println("4: Peso");
+            System.out.println("5: Sexo");
             System.out.println("0: Encerrar");
             opt = sc.nextInt();
             switch (opt){
@@ -114,6 +125,7 @@ public class ClinicaLista {
                             String novoNome = sc.next();
                             InputValidators.notString(novoNome);
                             animal.setNome(novoNome);
+                            System.out.println("Nome atualizado para: "+ animal.getNome());
                             break;
                         }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
                             System.out.println(e.getMessage());
@@ -129,6 +141,7 @@ public class ClinicaLista {
                             int novaIdade = Integer.parseInt(novaIdadeParcial);
                             InputValidators.notAZeroOrMinor(novaIdade);
                             animal.setIdade(novaIdade);
+                            System.out.println("Idade atualizada para: "+ animal.getIdade());
                             break;
                         }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
                             System.out.println(e.getMessage());
@@ -138,9 +151,11 @@ public class ClinicaLista {
                     while (true){
                         try{
                             System.out.println("Digite a raça do animal: ");
-                            String newRace = sc.next();
+                            sc.nextLine();
+                            String newRace = sc.nextLine();
                             InputValidators.notString(newRace);
                             animal.setRace(newRace);
+                            System.out.println("Raça atualizada para: " + animal.getRace());
                             break;
                         }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
                             System.out.println(e.getMessage());}
@@ -155,9 +170,24 @@ public class ClinicaLista {
                             double novoPeso = Double.parseDouble(novoPesoParcial);
                             InputValidators.notAZeroOrMinor(novoPeso);
                             animal.setPeso(novoPeso);
+                            System.out.println("Peso atualizado para: "+ animal.getPeso());
                             break;
                         }catch (NotAStringException | NotANumberException | NotAZeroOrMinorException e){
                             System.out.println(e.getMessage());}
+                    }
+                    break;
+                case 5:
+                    while(true){
+                        try{
+                            System.out.println("Digite o Sexo do animal. (F) para Feminino e (M) para Masculino");
+                            String novoSexo = sc.next();
+                            InputValidators.notString(novoSexo);
+                            Sexo sexoAtualizado = sexoDoAnimal(novoSexo);
+                            animal.setSexo(sexoAtualizado);
+                            break;
+                        }catch (NotAStringException e){
+                            System.out.println(e.getMessage());
+                        }
                     }
                     break;
                 case 0 :
@@ -224,5 +254,17 @@ public class ClinicaLista {
     //Função auxiliar. Serve para auxiliar o mét0do attCadastro
     private Animal animalFinder(String animalID){
         return lista.stream().filter(a -> a.getId().equalsIgnoreCase(animalID)).findFirst().orElse(null);
+    }
+    private Sexo sexoDoAnimal(String sexo){
+        Sexo sexoEscolhido;
+        if (Objects.equals(sexo, "m")){
+            sexoEscolhido = Sexo.Masculino;
+        } else if (Objects.equals(sexo,"f")) {
+            sexoEscolhido = Sexo.Feminino;
+        }
+        else{
+            sexoEscolhido = Sexo.Indefinido;
+        }
+        return sexoEscolhido;
     }
 }
